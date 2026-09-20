@@ -9,7 +9,7 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep }) => 
   const steps = [
     { num: '01', id: 'step-01-jurisdiction', title: 'Jurisdiction', sub: 'Country & legal context' },
     { num: '02', id: 'step-02-road-selector', title: 'Road Corridor', sub: 'Classification & tenure' },
-    { num: '03', id: 'step-03-authority-profile', title: 'Responsibility', sub: 'Authority & mandate' },
+    { num: '03', id: 'step-03-authority-profile', title: 'Responsibility', sub: 'Mandate & audio desk' },
     { num: '04', id: 'step-04-budget-comparison', title: 'Cost Analysis', sub: 'Budget per km' },
     { num: '05', id: 'step-05-citizen-verification', title: 'Ground Truth', sub: 'Citizen verification' },
   ];

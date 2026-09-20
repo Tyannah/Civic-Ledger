@@ -1,7 +1,7 @@
 import React from 'react';
 import { CountryCode } from '../types';
 import { COUNTRIES } from '../data/roadsData';
-import { BookmarkCheck, ArrowDown, ShieldCheck, MapPin, Scale } from 'lucide-react';
+import { BookmarkCheck, ArrowDown, ShieldCheck, MapPin, Scale, Headphones } from 'lucide-react';
 import { ConcentricArcs, DotGrid } from './CivicDecorations';
 
 interface HeaderProps {
@@ -24,6 +24,20 @@ export const Header: React.FC<HeaderProps> = ({
     { code: 'UG', label: 'Uganda' },
     { code: 'NG', label: 'Nigeria' },
   ];
+
+  const audioHeaderLabel =
+    currentCountry === 'KE'
+      ? 'Audio: Kiswahili (KE 🇰🇪)'
+      : currentCountry === 'UG'
+      ? 'Audio: English for Luganda (UG 🇺🇬)'
+      : 'Audio: Overview (NG 🇳🇬)';
+
+  const audioHeaderTitle =
+    currentCountry === 'KE'
+      ? 'Listen to Kenya road overview in Kiswahili'
+      : currentCountry === 'UG'
+      ? 'Listen to English overview tailored for the Luganda corridor'
+      : 'Listen to road overview in English';
 
   return (
     <header id="step-01-jurisdiction" className="relative bg-[#F4EFE6] border-b-2 border-[#DDD4C4] text-[#1E2522] overflow-hidden">
@@ -57,13 +71,13 @@ export const Header: React.FC<HeaderProps> = ({
             CIVIC LEDGER
           </h1>
           <p className="mt-2 text-lg sm:text-xl md:text-2xl font-semibold text-[#BF532C] tracking-tight">
-            Understanding Community, Government &amp; Public Infrastructure
+            Understanding Government Body Roles &amp; Responsibilities
           </p>
         </div>
 
         {/* Educational Mission Lead */}
         <p className="mt-3 sm:mt-4 text-base sm:text-lg text-[#2D3530] leading-relaxed max-w-3xl">
-          Track who is legally responsible for each road corridor, how much taxpayer money was budgeted per kilometer, whether the ground truth matches public tenders, and where to petition for constitutional redress.
+          Track which body is responsible for each road corridor, how much taxpayer money was budgeted per kilometer, whether the ground truth matches public reports, and where to petition for constitutional redress.
         </p>
 
         {/* Country Jurisdiction Selector (Styled as organic friendly pills) */}
@@ -141,7 +155,15 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-3 text-xs font-mono font-semibold">
+            <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono font-semibold">
+              <a
+                href="#road-audio-module"
+                className="px-3 py-1.5 rounded-lg bg-[#3A543E] text-white hover:bg-[#2B402E] flex items-center gap-1.5 transition-colors shadow-2xs"
+                title={audioHeaderTitle}
+              >
+                <Headphones className="w-3.5 h-3.5 text-[#E09F3E]" />
+                <span>{audioHeaderLabel}</span>
+              </a>
               <a
                 href="#step-02-road-selector"
                 className="px-3 py-1.5 rounded-lg bg-[#F4EFE6] text-[#3A543E] hover:bg-[#EAE3D5] flex items-center gap-1 transition-colors"

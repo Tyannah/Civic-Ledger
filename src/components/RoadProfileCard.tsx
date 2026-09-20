@@ -10,9 +10,11 @@ import {
   Info,
   Copy,
   Check,
+  Headphones,
 } from 'lucide-react';
 import { formatCurrency } from '../utils/calculator';
 import { DotGrid } from './CivicDecorations';
+import { RoadAudioModule } from './RoadAudioModule';
 
 interface RoadProfileCardProps {
   project: RoadProject;
@@ -22,6 +24,20 @@ interface RoadProfileCardProps {
 export const RoadProfileCard: React.FC<RoadProfileCardProps> = ({ project, country }) => {
   const [copied, setCopied] = useState(false);
   const authority = country.authorities[project.roadClass];
+
+  const effectiveCountryCode = project.countryCode || country.code;
+  const audioBadgeText =
+    effectiveCountryCode === 'KE'
+      ? 'Audio (Kiswahili 🇰🇪)'
+      : effectiveCountryCode === 'UG'
+      ? 'Audio (English / Luganda 🇺🇬)'
+      : 'Audio (Overview 🇳🇬)';
+  const audioBadgeTooltip =
+    effectiveCountryCode === 'KE'
+      ? 'Listen to Kenya road overview in Kiswahili'
+      : effectiveCountryCode === 'UG'
+      ? 'Listen to English overview for the Luganda corridor'
+      : 'Listen to road overview in English';
 
   const statusColorMap = {
     completed: 'bg-[#E8F0EA] text-[#2E663B] border-[#BBD7C2]',
@@ -106,6 +122,15 @@ Source: ${project.sourceCitation}`;
           </div>
 
           <div className="flex flex-wrap items-center gap-2 shrink-0 relative z-10">
+            <a
+              href="#road-audio-module"
+              className="text-xs font-mono px-3.5 py-1.5 bg-[#F4EFE6] hover:bg-white text-[#1E2522] border border-[#DDD4C4] font-bold rounded-full flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer"
+              title={audioBadgeTooltip}
+            >
+              <Headphones className="w-3.5 h-3.5 text-[#BF532C]" />
+              <span>{audioBadgeText}</span>
+            </a>
+
             <span className={`text-xs font-mono px-3.5 py-1.5 border font-bold rounded-full ${statusColorMap[project.status]}`}>
               ● {statusLabelMap[project.status]}
             </span>
@@ -257,6 +282,11 @@ Source: ${project.sourceCitation}`;
           </div>
         </div>
 
+        {/* Integrated Civic Audio Desk: Luganda & Kiswahili Briefing */}
+        <div className="border-t-2 border-[#EAE3D5] p-5 sm:p-7 bg-[#FAF7F2]">
+          <RoadAudioModule project={project} country={country} />
+        </div>
+
         {/* Bottom Toolbar */}
         <div className="border-t-2 border-[#EAE3D5] bg-[#F4EFE6] p-4 px-6 text-xs font-mono flex flex-wrap items-center justify-between gap-3">
           <div className="text-[11px] text-[#556259]">
@@ -264,6 +294,13 @@ Source: ${project.sourceCitation}`;
           </div>
 
           <div className="flex items-center gap-2.5">
+            <a
+              href="#road-audio-module"
+              className="px-3.5 py-2 bg-white border border-[#DDD4C4] hover:bg-[#FAF7F2] text-xs font-mono uppercase font-bold flex items-center gap-1.5 cursor-pointer rounded-xl transition-colors text-[#1E2522]"
+            >
+              <Headphones className="w-3.5 h-3.5 text-[#BF532C]" />
+              <span>Audio Overview</span>
+            </a>
             <button
               type="button"
               onClick={handleCopyFacts}
