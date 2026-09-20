@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Gadugi', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@layer base {
+  *, ::before, ::after {
+    font-family: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  body {
+    font-family: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #1e2022;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-serif, .font-sans {
+    font-family: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif !important;
+  }
+
+  .font-brand-serif {
+    font-family: 'Newsreader', Georgia, Cambria, 'Times New Roman', Times, serif !important;
+  }
+
+  .font-mono {
+    font-family: 'Gadugi', 'Segoe UI', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-feature-settings: "tnum" 1;
+  }
+}
+
+/* Gazette & Docket Specialized Visuals */
+.gazette-double-border {
+  border-top: 3px double #2c3034;
+  border-bottom: 3px double #2c3034;
+}
+
+.gazette-rule {
+  height: 3px;
+  border-top: 1px solid #2c3034;
+  border-bottom: 1px solid #2c3034;
+}
+
+.docket-stamp {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: 2px solid currentColor;
+  transform: rotate(-1.5deg);
+}
+
+.paper-grid-bg {
+  background-image: radial-gradient(#d5ccba 0.75px, transparent 0.75px);
+  background-size: 16px 16px;
+}

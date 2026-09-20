@@ -1,0 +1,6 @@
+{
+  "name": "Civic Ledger",
+  "description": "MODULE 01 · ROADS — hospitals, schools & other public projects next. Understand who's responsible for a public project, what it was budgeted to cost, whether it was actually delivered — and where to take it if it wasn't.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
