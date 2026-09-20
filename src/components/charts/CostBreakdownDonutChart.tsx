@@ -16,11 +16,11 @@ interface CostBreakdownDonutChartProps {
 }
 
 const COMPONENTS = [
-  { name: 'Asphalt & Pavement', share: 0.38, color: '#1E293B', desc: 'Wearing course, binder layer, asphalt concrete surfacing' },
-  { name: 'Earthworks & Subbase', share: 0.26, color: '#0284C7', desc: 'Grading, cut & fill, gravel compaction, subgrade prep' },
-  { name: 'Storm Drainage', share: 0.18, color: '#2563EB', desc: 'Lined concrete ditches, side drains, culvert channels' },
-  { name: 'Structures & Bridges', share: 0.12, color: '#D97706', desc: 'Box culverts, flyover retaining walls, pedestrian spans' },
-  { name: 'Safety, Signs & Lighting', share: 0.06, color: '#16A34A', desc: 'Road marking, guardrails, reflective signs, cat eyes' },
+  { name: 'Asphalt & Pavement', share: 0.38, color: '#3A543E', desc: 'Wearing course, binder layer, asphalt concrete surfacing' },
+  { name: 'Earthworks & Subbase', share: 0.26, color: '#BF532C', desc: 'Grading, cut & fill, gravel compaction, subgrade prep' },
+  { name: 'Storm Drainage', share: 0.18, color: '#E09F3E', desc: 'Lined concrete ditches, side drains, culvert channels' },
+  { name: 'Structures & Bridges', share: 0.12, color: '#8C5E1E', desc: 'Box culverts, flyover retaining walls, pedestrian spans' },
+  { name: 'Safety, Signs & Lighting', share: 0.06, color: '#5B7A60', desc: 'Road marking, guardrails, reflective signs, cat eyes' },
 ];
 
 export const CostBreakdownDonutChart: React.FC<CostBreakdownDonutChartProps> = ({
@@ -49,15 +49,15 @@ export const CostBreakdownDonutChart: React.FC<CostBreakdownDonutChartProps> = (
     if (active && payload && payload.length) {
       const item = payload[0].payload;
       return (
-        <div className="bg-white border-2 border-[#1E2022] p-3 shadow-lg rounded-lg text-xs font-mono max-w-xs">
-          <div className="font-serif font-bold text-sm text-[#16191B] pb-1 border-b border-gray-200">
+        <div className="bg-white border-2 border-[#3A543E] p-3 shadow-lg rounded-xl text-xs font-mono max-w-xs">
+          <div className="font-bold text-sm text-[#1E2522] pb-1 border-b border-[#DDD4C4]">
             {item.name}
           </div>
-          <div className="text-base font-bold text-[#1D4ED8] mt-1">
+          <div className="text-base font-bold text-[#3A543E] mt-1">
             {formatVal(item.value)}
-            <span className="text-xs font-normal text-gray-500 ml-1">/ km ({item.percentage}%)</span>
+            <span className="text-xs font-normal text-[#66726A] ml-1">/ km ({item.percentage}%)</span>
           </div>
-          <p className="text-[11px] text-gray-600 mt-1 font-sans">{item.desc}</p>
+          <p className="text-[11px] text-[#4A554E] mt-1">{item.desc}</p>
         </div>
       );
     }
@@ -65,32 +65,31 @@ export const CostBreakdownDonutChart: React.FC<CostBreakdownDonutChartProps> = (
   };
 
   return (
-    <div className="w-full bg-white border border-[#E2E8F0] p-4 sm:p-5 rounded-xl">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-100 gap-2 mb-4">
+    <div className="w-full bg-[#FAF7F2] border-2 border-[#DDD4C4] p-4 sm:p-5 rounded-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#EAE3D5] gap-2 mb-4">
         <div>
-          <span className="text-[10px] font-mono uppercase tracking-wider text-gray-500 font-bold block">
-            Engineering Cost Composition
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#3A543E] font-bold block">
+            Civil Engineering Allocation
           </span>
-          <h4 className="font-serif font-bold text-base sm:text-lg text-[#16191B]">
-            Civil Works Component Allocation (Estimated)
+          <h4 className="font-bold text-base sm:text-lg text-[#1E2522]">
+            Standard Cost Component Breakdown per km
           </h4>
         </div>
-        <span className="text-xs font-mono text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
-          Standard FIDIC / Road Agency Model
+        <span className="text-xs font-mono text-[#66726A]">
+          Civil works empirical shares
         </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-        {/* Donut Chart with Centered Total */}
-        <div className="md:col-span-6 relative h-60 flex items-center justify-center">
+        <div className="md:col-span-6 h-60 w-full relative flex items-center justify-center">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={60}
-                outerRadius={95}
+                innerRadius={55}
+                outerRadius={85}
                 paddingAngle={3}
                 dataKey="value"
                 onMouseEnter={(_, index) => setActiveIndex(index)}
@@ -100,9 +99,9 @@ export const CostBreakdownDonutChart: React.FC<CostBreakdownDonutChartProps> = (
                   <Cell
                     key={`cell-${index}`}
                     fill={entry.color}
-                    stroke={activeIndex === index ? '#1E2022' : '#ffffff'}
-                    strokeWidth={activeIndex === index ? 2 : 1}
-                    className="transition-all duration-200 cursor-pointer"
+                    stroke="#FAF7F2"
+                    strokeWidth={2}
+                    opacity={activeIndex === null || activeIndex === index ? 1 : 0.6}
                   />
                 ))}
               </Pie>
@@ -110,50 +109,39 @@ export const CostBreakdownDonutChart: React.FC<CostBreakdownDonutChartProps> = (
             </PieChart>
           </ResponsiveContainer>
 
-          {/* Centered Total Label */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-gray-400 font-bold">
-              Total Cost
-            </span>
-            <span className="font-serif font-bold text-sm sm:text-base text-[#16191B]">
+            <span className="text-[10px] font-mono uppercase text-[#66726A] font-bold">Total / km</span>
+            <span className="font-bold text-sm text-[#1E2522]">
               {formatVal(totalCost)}
             </span>
-            <span className="text-[10px] font-mono text-gray-500">per km</span>
           </div>
         </div>
 
-        {/* Legend / Breakdown Details */}
         <div className="md:col-span-6 space-y-2 text-xs font-mono">
-          {data.map((item, idx) => (
-            <div
-              key={item.name}
-              onMouseEnter={() => setActiveIndex(idx)}
-              onMouseLeave={() => setActiveIndex(null)}
-              className={`p-2.5 rounded-lg border transition-all cursor-pointer flex items-center justify-between ${
-                activeIndex === idx
-                  ? 'bg-gray-50 border-[#1E2022] shadow-xs'
-                  : 'bg-white border-gray-100 hover:border-gray-300'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <span
-                  className="w-3 h-3 rounded-full shrink-0"
-                  style={{ backgroundColor: item.color }}
-                />
-                <div>
-                  <span className="font-bold text-[#1E2022] block font-sans text-xs">
-                    {item.name}
-                  </span>
-                  <span className="text-[10px] text-gray-500">{item.percentage}% of contract</span>
+          {data.map((item, index) => {
+            const isHovered = activeIndex === index;
+            return (
+              <div
+                key={item.name}
+                onMouseEnter={() => setActiveIndex(index)}
+                onMouseLeave={() => setActiveIndex(null)}
+                className={`p-2 rounded-xl transition-all cursor-pointer flex items-center justify-between border ${
+                  isHovered
+                    ? 'bg-white border-[#3A543E] shadow-xs'
+                    : 'bg-[#F4EFE6] border-transparent hover:bg-white'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                  <span className="font-bold text-[#1E2522]">{item.name}</span>
+                </div>
+                <div className="text-right">
+                  <span className="font-bold text-[#1E2522]">{formatVal(item.value)}</span>
+                  <span className="text-[10px] text-[#66726A] ml-1">({item.percentage}%)</span>
                 </div>
               </div>
-
-              <div className="text-right">
-                <span className="font-bold text-[#1E2022] block">{formatVal(item.value)}</span>
-                <span className="text-[10px] text-gray-400">/ km</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

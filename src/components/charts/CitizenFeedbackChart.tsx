@@ -23,9 +23,9 @@ export const CitizenFeedbackChart: React.FC<CitizenFeedbackChartProps> = ({
   confidenceScore,
 }) => {
   const data = [
-    { name: 'Matches Specifications', count: matches, color: '#1E6E38', desc: 'Civic verification reports confirming completed execution' },
-    { name: 'Defects / Partial Completion', count: partial, color: '#D9981E', desc: 'Reports citing incomplete drainage, missing asphalt, or cracks' },
-    { name: 'Stalled / Abandoned / Not Done', count: notDone, color: '#DC2626', desc: 'Reports citing deserted machinery, unpaved dust, or ghost road' },
+    { name: 'Matches Specifications', count: matches, color: '#2E663B', desc: 'Civic verification reports confirming completed execution' },
+    { name: 'Defects / Partial Completion', count: partial, color: '#E09F3E', desc: 'Reports citing incomplete drainage, missing asphalt, or cracks' },
+    { name: 'Stalled / Abandoned / Not Done', count: notDone, color: '#BF532C', desc: 'Reports citing deserted machinery, unpaved dust, or ghost road' },
   ];
 
   const CustomTooltip = ({ active, payload }: any) => {
@@ -33,12 +33,12 @@ export const CitizenFeedbackChart: React.FC<CitizenFeedbackChartProps> = ({
       const item = payload[0].payload;
       const pct = total > 0 ? Math.round((item.count / total) * 100) : 0;
       return (
-        <div className="bg-white border-2 border-[#1E2022] p-2.5 shadow-lg rounded-lg text-xs font-mono max-w-xs">
-          <div className="font-bold text-sm text-[#16191B]">{item.name}</div>
+        <div className="bg-white border-2 border-[#3A543E] p-3 shadow-lg rounded-xl text-xs font-mono max-w-xs">
+          <div className="font-bold text-sm text-[#1E2522] border-b border-[#DDD4C4] pb-1 mb-1">{item.name}</div>
           <div className="text-base font-bold" style={{ color: item.color }}>
             {item.count} citizen report{item.count === 1 ? '' : 's'} ({pct}%)
           </div>
-          <p className="text-[11px] text-gray-600 mt-1 font-sans">{item.desc}</p>
+          <p className="text-[11px] text-[#556259] mt-1">{item.desc}</p>
         </div>
       );
     }
@@ -46,7 +46,7 @@ export const CitizenFeedbackChart: React.FC<CitizenFeedbackChartProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-white border border-[#E2E8F0] p-4 rounded-xl">
+    <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-[#FAF7F2] border-2 border-[#DDD4C4] p-4 sm:p-5 rounded-2xl">
       <div className="sm:col-span-5 relative h-48 flex items-center justify-center">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -60,7 +60,7 @@ export const CitizenFeedbackChart: React.FC<CitizenFeedbackChartProps> = ({
               dataKey="count"
             >
               {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} stroke="#ffffff" strokeWidth={2} />
+                <Cell key={`cell-${index}`} fill={entry.color} stroke="#FAF7F2" strokeWidth={2} />
               ))}
             </Pie>
             <Tooltip content={<CustomTooltip />} />
@@ -68,26 +68,31 @@ export const CitizenFeedbackChart: React.FC<CitizenFeedbackChartProps> = ({
         </ResponsiveContainer>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="font-serif font-bold text-xl sm:text-2xl text-[#16191B]">
-            {confidenceScore}%
+          <span className="text-2xl font-bold text-[#1E2522]">
+            {total === 0 ? '0' : `${confidenceScore}%`}
           </span>
-          <span className="text-[10px] font-mono uppercase text-gray-500 font-bold">
-            Confidence
-          </span>
+          <span className="text-[10px] font-mono uppercase text-[#66726A] font-bold">Confidence</span>
         </div>
       </div>
 
       <div className="sm:col-span-7 space-y-2 text-xs font-mono">
+        <div className="text-[11px] uppercase tracking-wider text-[#3A543E] font-bold mb-1">
+          Community Observations Verification
+        </div>
+
         {data.map((item) => {
           const pct = total > 0 ? Math.round((item.count / total) * 100) : 0;
           return (
-            <div key={item.name} className="flex items-center justify-between p-2 rounded bg-gray-50 border border-gray-100">
+            <div
+              key={item.name}
+              className="p-2 bg-white border border-[#DDD4C4] rounded-xl flex items-center justify-between"
+            >
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                <span className="text-[#1E2022] font-semibold">{item.name}</span>
+                <span className="font-bold text-[#1E2522]">{item.name}</span>
               </div>
-              <div className="text-right font-bold text-[#1E2022]">
-                {item.count} <span className="text-gray-400 font-normal">({pct}%)</span>
+              <div className="text-right font-bold text-[#1E2522]">
+                {item.count} <span className="text-[#66726A] text-[11px]">({pct}%)</span>
               </div>
             </div>
           );

@@ -1,6 +1,7 @@
 import { CitizenReport, CitizenVerdict, CountryCode, ProjectTally } from '../types';
 
-const STORAGE_KEY = 'civic_ledger_community_reports_v1';
+const STORAGE_KEY = 'civic_ledger_community_reports_v2';
+const LEGACY_STORAGE_KEY_V1 = 'civic_ledger_community_reports_v1';
 const LEGACY_STORAGE_KEY = 'barabara_yangu_community_reports_v1';
 
 // Initial baseline citizen reports seeded for realism on first load
@@ -14,6 +15,8 @@ const INITIAL_SEEDED_REPORTS: CitizenReport[] = [
     verdict: 'matches',
     note: 'Road is fully open and paved from Gitaru to Ruaka. Overpasses functional. Some pedestrian footbridges still lack ramps.',
     reporterLocation: 'Kikuyu / Ruaka Corridor',
+    imageUrl: 'https://images.unsplash.com/photo-1545459720-aac8509eb02c?auto=format&fit=crop&w=800&q=80',
+    imageCaption: 'Western Bypass completed dual carriageway and flyover near Ruaka',
     timestamp: Date.now() - 1000 * 60 * 60 * 24 * 12,
   },
   {
@@ -46,6 +49,8 @@ const INITIAL_SEEDED_REPORTS: CitizenReport[] = [
     verdict: 'matches',
     note: 'Mteza and Mwache bridges are world-class. Traveled straight from airport to Diani without Likoni ferry delay.',
     reporterLocation: 'Mombasa / Kwale',
+    imageUrl: 'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=800&q=80',
+    imageCaption: 'Dongo Kundu sea bridge approach corridor',
     timestamp: Date.now() - 1000 * 60 * 60 * 24 * 8,
   },
 
@@ -58,6 +63,8 @@ const INITIAL_SEEDED_REPORTS: CitizenReport[] = [
     verdict: 'not_done',
     note: 'Contractor graded the earth and left exposed culverts. Heavy rain created big trenches. Grader has been parked for months.',
     reporterLocation: 'Mavoko Ward',
+    imageUrl: 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=800&q=80',
+    imageCaption: 'Excavated unpaved trench and halted works at Mavoko',
     timestamp: Date.now() - 1000 * 60 * 60 * 24 * 15,
   },
   {
@@ -80,6 +87,8 @@ const INITIAL_SEEDED_REPORTS: CitizenReport[] = [
     verdict: 'matches',
     note: 'Physically high quality and fast. Smooth surface. Toll collection works reliably.',
     reporterLocation: 'Kajjansi / Entebbe',
+    imageUrl: 'https://images.unsplash.com/photo-1545459720-aac8509eb02c?auto=format&fit=crop&w=800&q=80',
+    imageCaption: 'Entebbe Expressway main tarmac carriageway',
     timestamp: Date.now() - 1000 * 60 * 60 * 24 * 14,
   },
   {
@@ -102,6 +111,8 @@ const INITIAL_SEEDED_REPORTS: CitizenReport[] = [
     verdict: 'not_done',
     note: 'Drainage trenches dug out right in front of shop entrances over a year ago. Work abandoned. Children at risk of falling.',
     reporterLocation: 'Gulu City Centre',
+    imageUrl: 'https://images.unsplash.com/photo-1578955274801-e28399580fb2?auto=format&fit=crop&w=800&q=80',
+    imageCaption: 'Excavated trenches and abandoned road shoulder',
     timestamp: Date.now() - 1000 * 60 * 60 * 24 * 7,
   },
   {
@@ -163,13 +174,27 @@ const INITIAL_SEEDED_REPORTS: CitizenReport[] = [
 export function getStoredReports(): CitizenReport[] {
   if (typeof window === 'undefined') return INITIAL_SEEDED_REPORTS;
   try {
-    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
+    const raw =
+      localStorage.getItem(STORAGE_KEY) ||
+      localStorage.getItem(LEGACY_STORAGE_KEY_V1) ||
+      localStorage.getItem(LEGACY_STORAGE_KEY);
     if (!raw) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_SEEDED_REPORTS));
       return INITIAL_SEEDED_REPORTS;
     }
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : INITIAL_SEEDED_REPORTS;
+    if (!Array.isArray(parsed)) return INITIAL_SEEDED_REPORTS;
+    // Enrich seed reports with image URLs if missing
+    const enriched = parsed.map((item) => {
+      if (item.id && !item.imageUrl) {
+        const seedMatch = INITIAL_SEEDED_REPORTS.find((s) => s.id === item.id);
+        if (seedMatch?.imageUrl) {
+          return { ...item, imageUrl: seedMatch.imageUrl, imageCaption: seedMatch.imageCaption };
+        }
+      }
+      return item;
+    });
+    return enriched;
   } catch (err) {
     console.error('Failed reading localStorage reports', err);
     return INITIAL_SEEDED_REPORTS;

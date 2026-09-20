@@ -1,65 +1,70 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-  --font-serif: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'Gadugi', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Bebas Neue', Impact, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --color-civic-green: #3A543E;
+  --color-civic-green-dark: #2B402E;
+  --color-civic-green-light: #4D6E52;
+  --color-civic-ochre: #E09F3E;
+  --color-civic-ochre-light: #F7DCA8;
+  --color-civic-terracotta: #BF532C;
+  --color-civic-cream: #F4EFE6;
+  --color-civic-cream-card: #FAF7F0;
+  --color-civic-dark: #1E2522;
 }
 
 @layer base {
-  *, ::before, ::after {
-    font-family: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-  }
-
   html {
     scroll-behavior: smooth;
-    font-family: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   }
 
   body {
-    font-family: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-    background-color: #ffffff;
-    color: #1e2022;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background-color: #F4EFE6;
+    color: #1E2522;
   }
 
-  h1, h2, h3, h4, h5, h6, .font-serif, .font-sans {
-    font-family: 'Gadugi', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif !important;
-  }
-
-  .font-brand-serif {
-    font-family: 'Newsreader', Georgia, Cambria, 'Times New Roman', Times, serif !important;
+  .font-display {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    letter-spacing: 0.03em;
   }
 
   .font-mono {
-    font-family: 'Gadugi', 'Segoe UI', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-feature-settings: "tnum" 1;
   }
 }
 
-/* Gazette & Docket Specialized Visuals */
-.gazette-double-border {
-  border-top: 3px double #2c3034;
-  border-bottom: 3px double #2c3034;
+/* Civic Design Graphic Accents from Theme */
+.dot-matrix {
+  background-image: radial-gradient(#3A543E 1.5px, transparent 1.5px);
+  background-size: 8px 8px;
 }
 
-.gazette-rule {
-  height: 3px;
-  border-top: 1px solid #2c3034;
-  border-bottom: 1px solid #2c3034;
+.dot-matrix-light {
+  background-image: radial-gradient(#E09F3E 1.5px, transparent 1.5px);
+  background-size: 8px 8px;
 }
 
-.docket-stamp {
-  display: inline-block;
-  padding: 0.2rem 0.5rem;
-  text-transform: uppercase;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  border: 2px solid currentColor;
-  transform: rotate(-1.5deg);
+.dot-matrix-dark {
+  background-image: radial-gradient(#F4EFE6 1.5px, transparent 1.5px);
+  background-size: 8px 8px;
 }
 
-.paper-grid-bg {
-  background-image: radial-gradient(#d5ccba 0.75px, transparent 0.75px);
-  background-size: 16px 16px;
+/* Civic Card Containers */
+.civic-card {
+  background-color: #FFFFFF;
+  border: 2px solid #E2D8C6;
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 12px -2px rgba(43, 64, 46, 0.05);
 }
+
+.civic-card-green {
+  background-color: #3A543E;
+  color: #F4EFE6;
+  border-radius: 1.5rem;
+}
+

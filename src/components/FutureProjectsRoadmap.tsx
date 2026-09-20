@@ -10,12 +10,12 @@ import {
   Send,
   Building2,
   Layers,
-  ArrowUpRight,
   ShieldCheck,
   Milestone
 } from 'lucide-react';
 import { CountryCode } from '../types';
 import { COUNTRIES } from '../data/roadsData';
+import { DotGrid } from './CivicDecorations';
 
 interface FutureProjectsRoadmapProps {
   currentCountry: CountryCode;
@@ -177,41 +177,45 @@ export const FutureProjectsRoadmap: React.FC<FutureProjectsRoadmapProps> = ({ cu
   return (
     <section
       id="expansion-roadmap"
-      className="mt-8 bg-white border border-[#CBD5E1] rounded-2xl overflow-hidden shadow-xs"
+      className="mt-8 bg-white border-2 border-[#DDD4C4] rounded-2xl overflow-hidden shadow-xs relative"
     >
       {/* Top Banner Header */}
-      <div className="bg-[#F8FAFC] border-b border-[#CBD5E1] p-5 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1">
+      <div className="bg-[#FAF7F2] border-b-2 border-[#EAE3D5] p-5 sm:p-7 relative overflow-hidden">
+        <div className="absolute -right-4 -bottom-4 opacity-20 pointer-events-none hidden sm:block">
+          <DotGrid rows={3} cols={6} color="#3A543E" />
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+          <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono font-bold tracking-widest uppercase bg-[#1D4ED8] text-white px-2 py-0.5 rounded">
-                Scope & Roadmap
+              <span className="text-[10px] font-mono font-bold tracking-widest uppercase bg-[#E09F3E] text-[#1E2522] px-3 py-0.5 rounded-full">
+                Scope &amp; Roadmap
               </span>
-              <span className="text-xs font-mono font-bold text-[#1D4ED8] flex items-center gap-1">
+              <span className="text-xs font-mono font-bold text-[#3A543E] flex items-center gap-1">
                 <Layers className="w-3.5 h-3.5" /> Civic Ledger Platform Architecture
               </span>
             </div>
-            <h3 className="font-serif font-black text-2xl sm:text-3xl text-[#16191B] tracking-tight">
+            <h3 className="font-display uppercase text-2xl sm:text-3xl text-[#3A543E] tracking-wide">
               From Roads to Universal Public Project Scrutiny
             </h3>
-            <p className="text-xs sm:text-sm text-[#475569] max-w-3xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#556259] max-w-3xl leading-relaxed">
               <strong>Civic Ledger</strong> starts by auditing roads and highways because transport accounts for 20–35% of public capital budgets in East and West Africa. Our open civic verification methodology is engineered to expand across all key public infrastructure domains.
             </p>
           </div>
 
-          <div className="shrink-0 flex items-center gap-2 bg-white border border-[#E2E8F0] px-3.5 py-2 rounded-xl text-xs font-mono">
-            <ShieldCheck className="w-4 h-4 text-[#1D4ED8]" />
+          <div className="shrink-0 flex items-center gap-2.5 bg-white border border-[#DDD4C4] px-4 py-2.5 rounded-2xl text-xs font-mono shadow-2xs">
+            <ShieldCheck className="w-4 h-4 text-[#3A543E]" />
             <div>
-              <span className="text-[10px] uppercase text-gray-500 block font-bold">Current Status</span>
-              <span className="text-xs font-bold text-[#16191B]">Roads Active • 4 Sectors In Pipeline</span>
+              <span className="text-[10px] uppercase text-[#66726A] block font-bold">Current Status</span>
+              <span className="text-xs font-bold text-[#1E2522]">Roads Active • 4 Sectors In Pipeline</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Interactive Sector Tabs */}
-      <div className="border-b border-[#E2E8F0] bg-white px-4 sm:px-6 pt-3 overflow-x-auto">
-        <div className="flex gap-2 min-w-max pb-2">
+      <div className="border-b border-[#EAE3D5] bg-[#F4EFE6] px-4 sm:px-6 pt-3 overflow-x-auto">
+        <div className="flex gap-2 min-w-max pb-3">
           {SECTORS.map((sector) => {
             const Icon = sector.icon;
             const isActive = activeTab === sector.id;
@@ -220,23 +224,23 @@ export const FutureProjectsRoadmap: React.FC<FutureProjectsRoadmapProps> = ({ cu
                 key={sector.id}
                 type="button"
                 onClick={() => setActiveTab(sector.id)}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-mono transition-all ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono transition-all cursor-pointer font-bold ${
                   isActive
-                    ? 'bg-[#1D4ED8] text-white font-bold shadow-xs'
-                    : 'bg-[#F1F5F9] text-[#475569] hover:bg-[#E2E8F0] hover:text-[#1E293B]'
+                    ? 'bg-[#3A543E] text-white shadow-xs'
+                    : 'bg-white text-[#4A554E] hover:bg-[#EAE3D5] border border-[#DDD4C4]'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className="w-3.5 h-3.5 text-[#E09F3E]" />
                 <span>{sector.name}</span>
                 {sector.status === 'active' ? (
-                  <span className={`text-[9px] uppercase px-1.5 py-0.5 rounded font-bold ${
-                    isActive ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800'
+                  <span className={`text-[9px] uppercase px-2 py-0.5 rounded-full font-bold ${
+                    isActive ? 'bg-[#E09F3E] text-[#1E2522]' : 'bg-[#E8F0EA] text-[#2E663B]'
                   }`}>
                     Live
                   </span>
                 ) : (
-                  <span className={`text-[9px] uppercase px-1.5 py-0.5 rounded font-bold ${
-                    isActive ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-800'
+                  <span className={`text-[9px] uppercase px-2 py-0.5 rounded-full font-bold ${
+                    isActive ? 'bg-white/20 text-white' : 'bg-[#FAF7F2] text-[#8C5E1E]'
                   }`}>
                     {sector.phase}
                   </span>
@@ -248,103 +252,103 @@ export const FutureProjectsRoadmap: React.FC<FutureProjectsRoadmapProps> = ({ cu
       </div>
 
       {/* Selected Sector Deep Dive & Comparison */}
-      <div className="p-5 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white">
+      <div className="p-5 sm:p-7 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white">
         {/* Left Column: Sector Blueprint */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center border border-blue-100">
+          <div className="flex items-center justify-between pb-3 border-b border-[#EAE3D5]">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-[#F4EFE6] text-[#3A543E] flex items-center justify-center border border-[#DDD4C4]">
                 <SectorIcon className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-gray-500 font-bold block">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#66726A] font-bold block">
                   {selectedSector.phase} • {selectedSector.timeline}
                 </span>
-                <h4 className="font-serif font-bold text-lg text-[#16191B]">
+                <h4 className="font-bold text-lg text-[#1E2522]">
                   {selectedSector.name}
                 </h4>
               </div>
             </div>
 
             {selectedSector.status === 'active' ? (
-              <span className="inline-flex items-center gap-1 text-xs font-mono text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 font-bold">
+              <span className="inline-flex items-center gap-1 text-xs font-mono text-[#2E663B] bg-[#E8F0EA] px-3 py-1 rounded-full border border-[#BBD7C2] font-bold">
                 <CheckCircle2 className="w-3.5 h-3.5" /> Fully Auditable Now
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 text-xs font-mono text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200 font-bold">
+              <span className="inline-flex items-center gap-1 text-xs font-mono text-[#8C5E1E] bg-[#FDF4E7] px-3 py-1 rounded-full border border-[#F4DCBE] font-bold">
                 <Clock className="w-3.5 h-3.5" /> Target Horizon
               </span>
             )}
           </div>
 
           {/* Core Mandate in current country */}
-          <div className="bg-[#F8FAFC] p-4 rounded-xl border border-[#E2E8F0] space-y-2">
+          <div className="bg-[#FAF7F2] p-4 rounded-2xl border border-[#DDD4C4] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-mono">
-              <span className="text-[10px] uppercase font-bold text-gray-500 flex items-center gap-1">
-                <Building2 className="w-3.5 h-3.5 text-[#1D4ED8]" />
+              <span className="text-[10px] uppercase font-bold text-[#3A543E] flex items-center gap-1">
+                <Building2 className="w-3.5 h-3.5 text-[#BF532C]" />
                 Designated Statutory Bodies in {country.name}:
               </span>
-              <span className="text-[10px] text-gray-400 font-medium">Jurisdictional Frame</span>
+              <span className="text-[10px] text-[#66726A] font-medium">Jurisdictional Frame</span>
             </div>
-            <p className="text-xs font-mono font-bold text-[#1E293B]">
+            <p className="text-xs font-mono font-bold text-[#1E2522]">
               {selectedSector.keyAgencies[currentCountry]}
             </p>
           </div>
 
           {/* Forensic Cost Metric */}
-          <div className="bg-[#FAF8F3] p-4 rounded-xl border border-[#E8E2D4] space-y-1">
-            <span className="text-[10px] font-mono uppercase font-bold text-[#736555] block">
+          <div className="bg-[#FAF7F2] p-4 rounded-2xl border border-[#DDD4C4] space-y-1">
+            <span className="text-[10px] font-mono uppercase font-bold text-[#66726A] block">
               Universal Benchmark Baseline To Be Enforced:
             </span>
-            <p className="text-xs text-[#2A2E33] font-serif leading-relaxed">
+            <p className="text-xs text-[#2A332C] leading-relaxed">
               {selectedSector.forensicMetric}
             </p>
           </div>
 
           {/* Citizen Verification Scope */}
-          <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100 space-y-1">
-            <span className="text-[10px] font-mono uppercase font-bold text-[#1D4ED8] block">
+          <div className="bg-[#FDF0EC] p-4 rounded-2xl border border-[#F2C7BB] space-y-1">
+            <span className="text-[10px] font-mono uppercase font-bold text-[#BF532C] block">
               Ground-Truth Forensic Verification Points:
             </span>
-            <p className="text-xs text-[#1E3A8A] font-serif leading-relaxed">
+            <p className="text-xs text-[#7A2E12] leading-relaxed">
               {selectedSector.citizenFocus}
             </p>
           </div>
         </div>
 
         {/* Right Column: Citizen Project Nomination Form */}
-        <div className="lg:col-span-5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-4 sm:p-5 flex flex-col justify-between">
+        <div className="lg:col-span-5 bg-[#FAF7F2] border-2 border-[#DDD4C4] rounded-2xl p-5 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              <Sparkles className="w-4 h-4 text-[#1D4ED8]" />
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#16191B]">
+              <Sparkles className="w-4 h-4 text-[#BF532C]" />
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1E2522]">
                 Nominate a Public Project
               </span>
             </div>
-            <p className="text-xs text-[#64748B] mb-3">
+            <p className="text-xs text-[#556259] mb-4 leading-relaxed">
               Know of a stalled hospital, dry municipal water project, or neglected public facility in {country.name}? Nominate it for prioritization in Civic Ledger’s rollout.
             </p>
 
-            <form onSubmit={handleNominate} className="space-y-3">
+            <form onSubmit={handleNominate} className="space-y-3 font-mono text-xs">
               <div>
-                <label className="block text-[10px] font-mono uppercase font-bold text-gray-600 mb-1">
+                <label className="block text-[10px] uppercase font-bold text-[#1E2522] mb-1">
                   Public Infrastructure Sector
                 </label>
                 <select
                   value={formSector}
                   onChange={(e) => setFormSector(e.target.value)}
-                  className="w-full text-xs font-mono p-2 border border-gray-300 rounded bg-white focus:outline-hidden focus:ring-1 focus:ring-[#1D4ED8]"
+                  className="w-full text-xs p-2.5 border border-[#DDD4C4] rounded-xl bg-white text-[#1E2522] focus:border-[#3A543E] focus:outline-none"
                 >
-                  <option value="water">Municipal Water & Dams</option>
-                  <option value="health">Public Hospitals & Clinics</option>
-                  <option value="schools">Public Schools & Technical Colleges</option>
-                  <option value="energy">Rural Power Grids & Solar Microgrids</option>
-                  <option value="transport">Roads & Urban Flyovers</option>
+                  <option value="water">Municipal Water &amp; Dams</option>
+                  <option value="health">Public Hospitals &amp; Clinics</option>
+                  <option value="schools">Public Schools &amp; Technical Colleges</option>
+                  <option value="energy">Rural Power Grids &amp; Solar Microgrids</option>
+                  <option value="transport">Roads &amp; Urban Flyovers</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-[10px] font-mono uppercase font-bold text-gray-600 mb-1">
+                <label className="block text-[10px] uppercase font-bold text-[#1E2522] mb-1">
                   Project Name / Facility Title *
                 </label>
                 <input
@@ -353,12 +357,12 @@ export const FutureProjectsRoadmap: React.FC<FutureProjectsRoadmapProps> = ({ cu
                   placeholder="e.g. Itare Dam Water Supply / Malindi Sub-County Hospital Wing"
                   value={formTitle}
                   onChange={(e) => setFormTitle(e.target.value)}
-                  className="w-full text-xs p-2 border border-gray-300 rounded bg-white focus:outline-hidden focus:ring-1 focus:ring-[#1D4ED8]"
+                  className="w-full text-xs p-2.5 border border-[#DDD4C4] rounded-xl bg-white text-[#1E2522] focus:border-[#3A543E] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-mono uppercase font-bold text-gray-600 mb-1">
+                <label className="block text-[10px] uppercase font-bold text-[#1E2522] mb-1">
                   County / District / LGA Location
                 </label>
                 <input
@@ -366,12 +370,12 @@ export const FutureProjectsRoadmap: React.FC<FutureProjectsRoadmapProps> = ({ cu
                   placeholder="e.g. Nakuru County / Gulu District / Kaduna South LGA"
                   value={formLocation}
                   onChange={(e) => setFormLocation(e.target.value)}
-                  className="w-full text-xs p-2 border border-gray-300 rounded bg-white focus:outline-hidden focus:ring-1 focus:ring-[#1D4ED8]"
+                  className="w-full text-xs p-2.5 border border-[#DDD4C4] rounded-xl bg-white text-[#1E2522] focus:border-[#3A543E] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-mono uppercase font-bold text-gray-600 mb-1">
+                <label className="block text-[10px] uppercase font-bold text-[#1E2522] mb-1">
                   Observed Delivery Issue / Status
                 </label>
                 <textarea
@@ -379,20 +383,20 @@ export const FutureProjectsRoadmap: React.FC<FutureProjectsRoadmapProps> = ({ cu
                   placeholder="e.g. Contractor abandoned site 14 months ago; residents have zero piped water despite KES 450M expenditure."
                   value={formNotes}
                   onChange={(e) => setFormNotes(e.target.value)}
-                  className="w-full text-xs p-2 border border-gray-300 rounded bg-white focus:outline-hidden focus:ring-1 focus:ring-[#1D4ED8]"
+                  className="w-full text-xs p-2.5 border border-[#DDD4C4] rounded-xl bg-white text-[#1E2522] focus:border-[#3A543E] focus:outline-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-2.5 px-4 bg-[#1D4ED8] hover:bg-blue-800 text-white rounded-lg text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                className="w-full py-2.5 px-4 bg-[#3A543E] hover:bg-[#2B402E] text-white rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer"
               >
-                <Send className="w-3.5 h-3.5" />
+                <Send className="w-3.5 h-3.5 text-[#E09F3E]" />
                 Submit Sector Nomination
               </button>
 
               {formSubmitted && (
-                <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs p-2 rounded text-center font-mono">
+                <div className="bg-[#E8F0EA] border border-[#2E663B] text-[#2E663B] text-xs p-2.5 rounded-xl text-center font-mono">
                   ✓ Project nomination recorded into Civic Ledger local docket.
                 </div>
               )}
@@ -401,9 +405,9 @@ export const FutureProjectsRoadmap: React.FC<FutureProjectsRoadmapProps> = ({ cu
 
           {/* Recent Nominations Count */}
           {nominations.length > 0 && (
-            <div className="mt-4 pt-3 border-t border-gray-200 text-[11px] font-mono text-gray-500 flex items-center justify-between">
+            <div className="mt-4 pt-3 border-t border-[#EAE3D5] text-[11px] font-mono text-[#66726A] flex items-center justify-between">
               <span>{nominations.length} citizen nomination{nominations.length === 1 ? '' : 's'} logged</span>
-              <span className="text-[#1D4ED8] font-bold">Stored in local docket</span>
+              <span className="text-[#3A543E] font-bold">Stored in local docket</span>
             </div>
           )}
         </div>

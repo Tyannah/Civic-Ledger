@@ -9,6 +9,8 @@ export interface ComplaintData {
   citizenNote?: string;
   citizenLocation?: string;
   citizenName?: string;
+  hasImage?: boolean;
+  imageCaption?: string;
 }
 
 export function generateComplaintDocket(data: ComplaintData): {
@@ -70,8 +72,7 @@ GROUND REALITY OBSERVED BY RESIDENTS: ${verdictDescription}
 
 SPECIFIC OBSERVATIONS FROM THE GROUND:
 ${citizenNote ? citizenNote.trim() : 'Public works appear severely stalled, defective, or deserted without functional drainage, paving, or safety provisions.'}
-${citizenLocation ? `Location of Citizen Observer: ${citizenLocation.trim()}` : ''}
-${analysis.delayNotice ? `\nDELIVERY DELAY RECORD:\n${analysis.delayNotice}` : ''}
+${citizenLocation ? `Location of Citizen Observer: ${citizenLocation.trim()}\n` : ''}${data.hasImage ? `PHOTOGRAPHIC EVIDENCE: ATTACHED (Citizen on-site field photograph appended as evidentiary Annexure A${data.imageCaption ? ` - "${data.imageCaption}"` : ''})\n` : ''}${analysis.delayNotice ? `\nDELIVERY DELAY RECORD:\n${analysis.delayNotice}` : ''}
 
 ----------------------------------------------------------------------
 3. STATUTORY BREACH & INSTITUTIONAL CONTEXT

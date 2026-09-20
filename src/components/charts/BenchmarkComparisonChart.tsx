@@ -60,7 +60,7 @@ export const BenchmarkComparisonChart: React.FC<BenchmarkComparisonChartProps> =
       value: Math.round(minCost),
       type: 'benchmark',
       desc: `Minimum typical cost for ${roadClassLabel}`,
-      fill: '#94A3B8',
+      fill: '#D8CFBF',
     },
     {
       name: 'Benchmark Average',
@@ -68,7 +68,7 @@ export const BenchmarkComparisonChart: React.FC<BenchmarkComparisonChartProps> =
       value: Math.round(avgBenchmark),
       type: 'benchmark',
       desc: `Empirical international median for ${roadClassLabel}`,
-      fill: '#64748B',
+      fill: '#B8AD99',
     },
     {
       name: 'Benchmark Ceiling',
@@ -76,7 +76,7 @@ export const BenchmarkComparisonChart: React.FC<BenchmarkComparisonChartProps> =
       value: Math.round(maxCost),
       type: 'benchmark',
       desc: `Upper threshold corridor before audit flags`,
-      fill: '#475569',
+      fill: '#8E826F',
     },
     {
       name: projectName.length > 20 ? projectName.slice(0, 18) + '...' : projectName,
@@ -87,10 +87,10 @@ export const BenchmarkComparisonChart: React.FC<BenchmarkComparisonChartProps> =
       desc: `Reported civil works contract cost per kilometer`,
       fill:
         verdict === 'above_typical'
-          ? '#DC2626'
+          ? '#BF532C'
           : verdict === 'normal'
-          ? '#1E6E38'
-          : '#D9981E',
+          ? '#3A543E'
+          : '#E09F3E',
     },
   ];
 
@@ -103,30 +103,30 @@ export const BenchmarkComparisonChart: React.FC<BenchmarkComparisonChartProps> =
       const isBelow = item.value < minCost && item.type === 'project';
 
       return (
-        <div className="bg-white border-2 border-[#1E2022] p-3 shadow-lg rounded-lg text-xs font-mono max-w-xs">
-          <div className="font-bold text-sm text-[#16191B] font-serif border-b border-gray-200 pb-1 mb-1.5">
+        <div className="bg-white border-2 border-[#3A543E] p-3 shadow-lg rounded-xl text-xs font-mono max-w-xs">
+          <div className="font-bold text-sm text-[#1E2522] border-b border-[#DDD4C4] pb-1 mb-1.5">
             {item.fullName || item.name}
           </div>
-          <div className="text-base font-bold text-[#1D4ED8]">
+          <div className="text-base font-bold text-[#3A543E]">
             {formatVal(item.value)}
-            <span className="text-xs font-normal text-gray-500 ml-1">/ km</span>
+            <span className="text-xs font-normal text-[#66726A] ml-1">/ km</span>
           </div>
-          <p className="text-[11px] text-gray-600 mt-1 font-sans">{item.desc}</p>
+          <p className="text-[11px] text-[#4A554E] mt-1">{item.desc}</p>
           {item.type === 'project' && (
-            <div className="mt-2 pt-1.5 border-t border-gray-200 text-[11px]">
+            <div className="mt-2 pt-1.5 border-t border-[#DDD4C4] text-[11px]">
               {isAbove && (
-                <span className="text-rose-600 font-bold">
+                <span className="text-[#BF532C] font-bold">
                   ⚠️ Exceeds typical corridor ceiling by +{Math.round(((item.value - ceilingValue) / ceilingValue) * 100)}%
                 </span>
               )}
               {isBelow && (
-                <span className="text-[#D9981E] font-bold">
-                  ℹ️ Lower than standard corridor floor
+                <span className="text-[#D08E2E] font-bold">
+                  ℹ️ Low unit cost relative to corridor expectations
                 </span>
               )}
               {!isAbove && !isBelow && (
-                <span className="text-[#1E6E38] font-bold">
-                  ✓ Within empirical benchmark corridor
+                <span className="text-[#2E663B] font-bold">
+                  ✓ Sits securely within empirical standard range
                 </span>
               )}
             </div>
@@ -138,70 +138,74 @@ export const BenchmarkComparisonChart: React.FC<BenchmarkComparisonChartProps> =
   };
 
   return (
-    <div className="w-full bg-white border border-[#E2E8F0] p-4 sm:p-5 rounded-xl">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-100 gap-2 mb-4">
+    <div className="w-full bg-[#FAF7F2] border-2 border-[#DDD4C4] p-4 sm:p-5 rounded-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#EAE3D5] gap-2 mb-4">
         <div>
-          <span className="text-[10px] font-mono uppercase tracking-wider text-gray-500 font-bold block">
-            Comparative Unit Cost Chart
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#3A543E] font-bold block">
+            Corridor Benchmark Analysis
           </span>
-          <h4 className="font-serif font-bold text-base sm:text-lg text-[#16191B]">
-            Project Cost vs International Benchmark Corridors
+          <h4 className="font-bold text-base sm:text-lg text-[#1E2522]">
+            Cost / km vs. World Bank &amp; AfDB Typical Bands
           </h4>
         </div>
-        <div className="flex items-center gap-3 text-xs font-mono text-gray-500">
-          <span className="flex items-center gap-1.5">
-            <span className="w-3 h-3 bg-[#64748B] rounded-sm inline-block" /> Benchmark Band
-          </span>
-          <span className="flex items-center gap-1.5">
+        <div className="flex items-center gap-3 text-xs font-mono">
+          <div className="flex items-center gap-1">
+            <span className="w-3 h-3 bg-[#B8AD99] rounded-sm" />
+            <span className="text-[#66726A]">Empirical Corridor</span>
+          </div>
+          <div className="flex items-center gap-1">
             <span
-              className="w-3 h-3 rounded-sm inline-block"
+              className="w-3 h-3 rounded-sm"
               style={{
                 backgroundColor:
                   verdict === 'above_typical'
-                    ? '#DC2626'
+                    ? '#BF532C'
                     : verdict === 'normal'
-                    ? '#1E6E38'
-                    : '#D9981E',
+                    ? '#3A543E'
+                    : '#E09F3E',
               }}
-            />{' '}
-            Selected Road
-          </span>
+            />
+            <span className="font-bold text-[#1E2522]">Current Road</span>
+          </div>
         </div>
       </div>
 
       <div className="h-64 sm:h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 20, right: 20, left: 10, bottom: 25 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+          <BarChart data={data} margin={{ top: 20, right: 30, left: 10, bottom: 20 }}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#EAE3D5" />
             <XAxis
               dataKey="shortName"
-              stroke="#64748B"
+              stroke="#66726A"
               fontSize={11}
               tickLine={false}
-              axisLine={{ stroke: '#CBD5E1' }}
+              axisLine={{ stroke: '#DDD4C4' }}
             />
             <YAxis
-              stroke="#64748B"
-              fontSize={10}
+              stroke="#66726A"
+              fontSize={11}
               tickLine={false}
-              axisLine={{ stroke: '#CBD5E1' }}
+              axisLine={{ stroke: '#DDD4C4' }}
               tickFormatter={(val) => {
                 if (isUsd) {
                   return val >= 1_000_000 ? `$${(val / 1_000_000).toFixed(1)}M` : `$${(val / 1_000).toFixed(0)}k`;
                 }
-                return val >= 1_000_000_000 ? `${(val / 1_000_000_000).toFixed(1)}B` : `${(val / 1_000_000).toFixed(0)}M`;
+                return val >= 1_000_000_000
+                  ? `${(val / 1_000_000_000).toFixed(1)}B`
+                  : val >= 1_000_000
+                  ? `${(val / 1_000_000).toFixed(0)}M`
+                  : `${val}`;
               }}
             />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: '#F8FAFC' }} />
+            <Tooltip content={<CustomTooltip />} />
             <ReferenceLine
               y={ceilingValue}
-              stroke="#DC2626"
+              stroke="#BF532C"
               strokeDasharray="4 4"
-              strokeWidth={1.5}
               label={{
-                value: `Ceiling: ${formatVal(ceilingValue)}/km`,
+                value: `Ceiling: ${formatVal(ceilingValue)}`,
                 position: 'top',
-                fill: '#DC2626',
+                fill: '#BF532C',
                 fontSize: 10,
                 fontFamily: 'monospace',
                 fontWeight: 'bold',
@@ -216,8 +220,9 @@ export const BenchmarkComparisonChart: React.FC<BenchmarkComparisonChartProps> =
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-2 text-center text-[11px] font-mono text-gray-500 bg-gray-50 py-1.5 px-3 rounded border border-gray-200">
-        Empirical comparative ceiling: <strong>{formatVal(ceilingValue)}/km</strong>. Projects exceeding this line trigger forensic review protocols.
+      <div className="mt-3 text-[11px] font-mono text-[#66726A] flex flex-wrap items-center justify-between border-t border-[#EAE3D5] pt-2">
+        <span>Classification: <strong>{roadClassLabel}</strong></span>
+        <span>Empirical range: <strong>{formatVal(minCost)}</strong> – <strong>{formatVal(maxCost)}</strong> / km</span>
       </div>
     </div>
   );

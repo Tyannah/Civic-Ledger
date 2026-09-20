@@ -37,7 +37,7 @@ export default function App() {
   const currentCountryInfo = COUNTRIES[countryCode];
 
   return (
-    <div className="min-h-screen bg-white text-[#1E2022] flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-[#F4EFE6] text-[#1E2522] flex flex-col font-sans selection:bg-[#E09F3E]/30 selection:text-[#1E2522]">
       {/* Gazette Header with Step 01 Country Switcher */}
       <Header
         currentCountry={countryCode}

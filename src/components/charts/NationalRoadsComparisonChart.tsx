@@ -64,19 +64,19 @@ export const NationalRoadsComparisonChart: React.FC<NationalRoadsComparisonChart
     if (active && payload && payload.length) {
       const item = payload[0].payload;
       return (
-        <div className="bg-white border-2 border-[#1E2022] p-3 shadow-lg rounded-lg text-xs font-mono max-w-xs">
-          <div className="font-serif font-bold text-sm text-[#16191B] border-b border-gray-200 pb-1 mb-1">
+        <div className="bg-white border-2 border-[#3A543E] p-3 shadow-lg rounded-xl text-xs font-mono max-w-xs">
+          <div className="font-bold text-sm text-[#1E2522] border-b border-[#DDD4C4] pb-1 mb-1">
             {item.fullName}
           </div>
-          <div className="text-base font-bold text-[#1D4ED8]">
+          <div className="text-base font-bold text-[#3A543E]">
             {formatVal(item.value)}
-            <span className="text-xs font-normal text-gray-500 ml-1">/ km</span>
+            <span className="text-xs font-normal text-[#66726A] ml-1">/ km</span>
           </div>
-          <div className="mt-1 text-[11px] text-gray-600">
+          <div className="mt-1 text-[11px] text-[#4A554E]">
             Class: <span className="uppercase font-bold">{item.roadClass}</span> • Length:{' '}
             {item.originalProject.lengthKm} km
           </div>
-          <div className="mt-1 text-[10px] text-blue-600 font-bold">
+          <div className="mt-1 text-[10px] text-[#BF532C] font-bold">
             {item.isSelected ? '★ Currently Selected' : 'Click bar to inspect this project'}
           </div>
         </div>
@@ -86,17 +86,17 @@ export const NationalRoadsComparisonChart: React.FC<NationalRoadsComparisonChart
   };
 
   return (
-    <div className="w-full bg-white border border-[#E2E8F0] p-4 sm:p-5 rounded-xl">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-100 gap-2 mb-4">
+    <div className="w-full bg-[#FAF7F2] border-2 border-[#DDD4C4] p-4 sm:p-5 rounded-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#EAE3D5] gap-2 mb-4">
         <div>
-          <span className="text-[10px] font-mono uppercase tracking-wider text-gray-500 font-bold block">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#3A543E] font-bold block">
             National Portfolio Cross-Comparison
           </span>
-          <h4 className="font-serif font-bold text-base sm:text-lg text-[#16191B]">
+          <h4 className="font-bold text-base sm:text-lg text-[#1E2522]">
             Cost-per-Kilometer Ranking across {countryName} Projects
           </h4>
         </div>
-        <span className="text-xs font-mono text-gray-500">
+        <span className="text-xs font-mono text-[#66726A]">
           Click any bar to load project into docket
         </span>
       </div>
@@ -108,46 +108,45 @@ export const NationalRoadsComparisonChart: React.FC<NationalRoadsComparisonChart
             layout="vertical"
             margin={{ top: 10, right: 30, left: 10, bottom: 10 }}
           >
-            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#F1F5F9" />
+            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#EAE3D5" />
             <XAxis
               type="number"
-              stroke="#64748B"
+              stroke="#66726A"
               fontSize={10}
               tickLine={false}
-              axisLine={{ stroke: '#CBD5E1' }}
+              axisLine={{ stroke: '#DDD4C4' }}
               tickFormatter={(val) => {
                 if (isUsd) {
                   return val >= 1_000_000 ? `$${(val / 1_000_000).toFixed(1)}M` : `$${(val / 1_000).toFixed(0)}k`;
                 }
-                return val >= 1_000_000_000 ? `${(val / 1_000_000_000).toFixed(1)}B` : `${(val / 1_000_000).toFixed(0)}M`;
+                return val >= 1_000_000_000
+                  ? `${(val / 1_000_000_000).toFixed(1)}B`
+                  : val >= 1_000_000
+                  ? `${(val / 1_000_000).toFixed(0)}M`
+                  : `${val}`;
               }}
             />
             <YAxis
               type="category"
               dataKey="name"
-              stroke="#64748B"
+              stroke="#1E2522"
               fontSize={11}
-              width={140}
               tickLine={false}
-              axisLine={{ stroke: '#CBD5E1' }}
+              axisLine={{ stroke: '#DDD4C4' }}
+              width={140}
             />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: '#F8FAFC' }} />
+            <Tooltip content={<CustomTooltip />} />
             <Bar
               dataKey="value"
               radius={[0, 4, 4, 0]}
-              onClick={(data: any) => {
-                const project = data?.originalProject || data?.payload?.originalProject;
-                if (project) {
-                  onSelectProject(project);
-                }
-              }}
-              className="cursor-pointer"
+              onClick={(entry: any) => onSelectProject(entry.originalProject)}
+              cursor="pointer"
             >
               {chartData.map((entry) => (
                 <Cell
                   key={`cell-${entry.id}`}
-                  fill={entry.isSelected ? '#1D4ED8' : '#94A3B8'}
-                  stroke={entry.isSelected ? '#1E2022' : 'transparent'}
+                  fill={entry.isSelected ? '#3A543E' : '#D0C6B5'}
+                  stroke={entry.isSelected ? '#E09F3E' : 'none'}
                   strokeWidth={entry.isSelected ? 2 : 0}
                 />
               ))}
@@ -156,12 +155,16 @@ export const NationalRoadsComparisonChart: React.FC<NationalRoadsComparisonChart
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-2 flex flex-wrap items-center justify-between text-[11px] font-mono text-gray-500 bg-gray-50 py-1.5 px-3 rounded border border-gray-200 gap-2">
-        <span className="flex items-center gap-2">
-          <span className="w-3 h-3 bg-[#1D4ED8] rounded-sm inline-block" /> Selected Road
-          <span className="w-3 h-3 bg-[#94A3B8] rounded-sm inline-block ml-2" /> Other Monitored Projects
-        </span>
-        <span>Interactive: select bars to switch docket</span>
+      <div className="mt-2 flex items-center justify-between text-[11px] font-mono text-[#66726A] border-t border-[#EAE3D5] pt-2">
+        <div className="flex items-center gap-3">
+          <span className="flex items-center gap-1">
+            <span className="w-2.5 h-2.5 bg-[#3A543E] rounded-full" /> Selected Road
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="w-2.5 h-2.5 bg-[#D0C6B5] rounded-full" /> Peer Projects
+          </span>
+        </div>
+        <span>Select any row to inspect case</span>
       </div>
     </div>
   );

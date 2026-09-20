@@ -104,6 +104,8 @@ export interface CitizenReport {
   verdict: CitizenVerdict;
   note?: string;
   reporterLocation?: string;
+  imageUrl?: string;
+  imageCaption?: string;
   timestamp: number;
 }
 
