@@ -205,7 +205,7 @@ export const CitizenVerification: React.FC<CitizenVerificationProps> = ({ projec
   const ombudsman = country.complaintsBody;
 
   return (
-    <section id="step-05-citizen-verification" className="relative bg-white border-2 border-[#DDD4C4] p-5 sm:p-7 mb-8 rounded-2xl shadow-xs overflow-hidden">
+    <section id="step-05-citizen-verification" className="relative bg-white border-2 border-[#DDD4C4] p-5 sm:p-7 mb-8 rounded-2xl shadow-xs overflow-hidden scroll-mt-16">
       {/* Step Header */}
       <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b-2 border-[#EAE3D5] pb-4 mb-6 gap-3">
         <div>

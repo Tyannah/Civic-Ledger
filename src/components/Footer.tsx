@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
           <div>
             <strong className="text-[#1E2522]">Civic Ledger</strong> — Public Infrastructure &amp; Capital Works Accountability Engine
             <span className="block text-[10px] text-[#66726A] mt-0.5">
-              Auditing national &amp; local roads today • Multi-sector expansion roadmap active for water, healthcare, schools, and rural energy
+              Auditing national &amp; local roads with statutory oversight and citizen verification
             </span>
           </div>
           <div className="flex items-center gap-3">

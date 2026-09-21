@@ -1,5 +1,4 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
 
 interface StepIndicatorProps {
   currentStep: number;
@@ -7,11 +6,11 @@ interface StepIndicatorProps {
 
 export const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep }) => {
   const steps = [
-    { num: '01', id: 'step-01-jurisdiction', title: 'Jurisdiction', sub: 'Country & legal context' },
-    { num: '02', id: 'step-02-road-selector', title: 'Road Corridor', sub: 'Classification & tenure' },
-    { num: '03', id: 'step-03-authority-profile', title: 'Responsibility', sub: 'Mandate & audio desk' },
-    { num: '04', id: 'step-04-budget-comparison', title: 'Cost Analysis', sub: 'Budget per km' },
-    { num: '05', id: 'step-05-citizen-verification', title: 'Ground Truth', sub: 'Citizen verification' },
+    { num: '01', id: 'step-01-jurisdiction', title: 'Jurisdiction' },
+    { num: '02', id: 'step-02-road-selector', title: 'Corridor' },
+    { num: '03', id: 'step-03-authority-profile', title: 'Responsibility & Audio' },
+    { num: '04', id: 'step-04-budget-comparison', title: 'Cost / km' },
+    { num: '05', id: 'step-05-citizen-verification', title: 'Ground Truth' },
   ];
 
   const handleScrollTo = (id: string) => {
@@ -24,49 +23,43 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep }) => 
   return (
     <nav
       aria-label="Step progress"
-      className="sticky top-0 z-30 bg-[#F4EFE6]/95 backdrop-blur-md border-b-2 border-[#DDD4C4] py-2.5 px-4 shadow-xs"
+      className="sticky top-0 z-30 bg-[#F4EFE6]/90 backdrop-blur-md border-b border-[#DDD4C4] py-2 px-4 shadow-2xs"
     >
-      <div className="max-w-6xl mx-auto">
-        <ol className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs font-sans">
+      <div className="max-w-6xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
+        <div className="flex items-center gap-1.5 sm:gap-2 min-w-max">
           {steps.map((s, idx) => {
             const stepNum = idx + 1;
             const isCurrent = currentStep === stepNum;
 
             return (
-              <li key={s.num}>
-                <button
-                  type="button"
-                  onClick={() => handleScrollTo(s.id)}
-                  className={`w-full text-left p-2.5 border-2 transition-all flex flex-col justify-between cursor-pointer rounded-xl ${
-                    isCurrent
-                      ? 'bg-white border-[#3A543E] text-[#1E2522] shadow-sm'
-                      : 'bg-[#EFE9DD] border-transparent text-[#4A554E] hover:bg-white hover:border-[#DDD4C4]'
+              <button
+                key={s.num}
+                type="button"
+                onClick={() => handleScrollTo(s.id)}
+                className={`px-3 py-1.5 rounded-full text-xs font-mono font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
+                  isCurrent
+                    ? 'bg-[#3A543E] text-white shadow-2xs'
+                    : 'bg-[#EAE3D5] text-[#4A554E] hover:bg-white hover:text-[#1E2522]'
+                }`}
+              >
+                <span
+                  className={`text-[10px] font-bold px-1.5 py-0.2 rounded-full ${
+                    isCurrent ? 'bg-[#E09F3E] text-[#1E2522]' : 'bg-[#DDD4C4] text-[#333]'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-full ${
-                        isCurrent
-                          ? 'bg-[#E09F3E] text-[#1E2522]'
-                          : 'bg-[#3A543E] text-white'
-                      }`}
-                    >
-                      {s.num}
-                    </span>
-                    <span className="text-[10px] font-mono font-semibold text-[#66726A] flex items-center gap-0.5 hover:text-[#BF532C]">
-                      Jump <ArrowRight className="w-2.5 h-2.5" />
-                    </span>
-                  </div>
-                  <div className="mt-1 font-bold text-xs sm:text-sm tracking-tight truncate text-[#1E2522]">
-                    {s.title}
-                  </div>
-                  <div className="text-[10px] truncate text-[#66726A]">{s.sub}</div>
-                </button>
-              </li>
+                  {s.num}
+                </span>
+                <span>{s.title}</span>
+              </button>
             );
           })}
-        </ol>
+        </div>
+
+        <span className="hidden md:inline text-[11px] font-mono text-[#66726A] shrink-0">
+          Scroll to audit steps
+        </span>
       </div>
     </nav>
   );
 };
+

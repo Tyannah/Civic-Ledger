@@ -8,7 +8,6 @@ import { RoadProfileCard } from './components/RoadProfileCard';
 import { BudgetBenchmark } from './components/BudgetBenchmark';
 import { CitizenVerification } from './components/CitizenVerification';
 import { StructuralContextCard } from './components/StructuralContextCard';
-import { FutureProjectsRoadmap } from './components/FutureProjectsRoadmap';
 import { Footer } from './components/Footer';
 
 export default function App() {
@@ -32,6 +31,13 @@ export default function App() {
     if (project.countryCode !== countryCode) {
       setCountryCode(project.countryCode);
     }
+    // Scroll down to the rest of the details
+    setTimeout(() => {
+      const detailsSection = document.getElementById('step-03-authority-profile');
+      if (detailsSection) {
+        detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 60);
   };
 
   const currentCountryInfo = COUNTRIES[countryCode];
@@ -81,11 +87,6 @@ export default function App() {
         <StructuralContextCard
           currentCountry={countryCode}
           onSelectCountry={handleCountryChange}
-        />
-
-        {/* Civic Ledger Expansion Plan: Roads to Universal Public Projects */}
-        <FutureProjectsRoadmap
-          currentCountry={countryCode}
         />
       </main>
 
