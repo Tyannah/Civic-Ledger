@@ -378,9 +378,211 @@ export const RoadSelector: React.FC<RoadSelectorProps> = ({
         </div>
       )}
 
-      {/* TAB 2: Describe an unlisted road */} 
-       
-       
+      {/* TAB 2: Describe an unlisted road */}
+      {tab === 'custom' && (
+        <form onSubmit={handleCreateCustom} className="bg-[#FAF7F2] border-2 border-[#DDD4C4] p-5 sm:p-7 rounded-2xl">
+          <div className="mb-5 pb-4 border-b border-[#EAE3D5]">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-2xl font-display uppercase tracking-wide text-[#3A543E] flex items-center gap-2">
+                <Compass className="w-5 h-5 text-[#BF532C]" />
+                Civic Classifier: Describe Any Road in {country.name}
+              </h3>
+              <span className="text-xs font-mono uppercase bg-[#E09F3E] text-[#1E2522] px-2.5 py-1 rounded-full font-bold">
+                Zero Pre-existing Record Required
+              </span>
+            </div>
+            <p className="text-xs text-[#525E56] mt-1 leading-relaxed">
+              If your neighborhood street, rural feeder link, or town avenue does not appear in national databases, enter it here. This civic engine immediately identifies the statutory road agency, legal mandate, oversight office, and benchmark cost corridor.
+            </p>
+          </div>
+
+          <div className="space-y-4 text-xs font-mono">
+            {/* Road Name */}
+            <div>
+              <label className="block font-bold text-[#1E2522] uppercase tracking-wider mb-1.5">
+                Road Name or Corridor Description *
+              </label>
+              <input
+                type="text"
+                id="custom-road-name"
+                required
+                placeholder={
+                  countryCode === 'KE'
+                    ? 'e.g. Mirema Drive, Thika–Magumu Link, Ruai Bypass, Nakuru West Link'
+                    : countryCode === 'UG'
+                    ? 'e.g. Mukono–Kayunga Bypass, Salaama Road, Jinja Feeder, Hoima Link'
+                    : 'e.g. Ikorodu Inner Ring, Kaduna–Zaria Spur, Nsukka Feeder, Aba Commercial Way'
+                }
+                value={customName}
+                onChange={(e) => setCustomName(e.target.value)}
+                className="w-full p-3 border border-[#DDD4C4] bg-white text-[#1E2522] focus:border-[#3A543E] focus:outline-none text-sm rounded-xl"
+              />
+            </div>
+
+            {/* Road Class Selection */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block font-bold text-[#1E2522] uppercase tracking-wider">
+                  Where does this road sit? (Statutory Classification) *
+                </label>
+                <span className="text-[11px] text-[#66726A]">Selects statutory agency automatically</span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                {[
+                  {
+                    id: 'national',
+                    title: 'National / Federal Highway',
+                    desc:
+                      countryCode === 'KE'
+                        ? 'Inter-county trunk corridor (KeNHA)'
+                        : countryCode === 'UG'
+                        ? 'Primary national arterial (MoWT National Roads Dept)'
+                        : 'Federal highway linking states/ports (FERMA / Fed Ministry)',
+                  },
+                  {
+                    id: 'urban',
+                    title: 'Urban Street / City Arterial',
+                    desc:
+                      countryCode === 'KE'
+                        ? 'City / municipality paved street (KURA)'
+                        : countryCode === 'UG'
+                        ? 'Urban council roads office'
+                        : 'State capital avenue or flyover (State Ministry of Works)',
+                  },
+                  {
+                    id: 'rural',
+                    title: 'Rural / Village Access Road',
+                    desc:
+                      countryCode === 'KE'
+                        ? 'Constituency agricultural link (KeRRA)'
+                        : countryCode === 'UG'
+                        ? 'District local government feeder (District LG)'
+                        : 'LGA agricultural feeder road (LGA Works Dept)',
+                  },
+                  {
+                    id: 'local',
+                    title: 'Other Local / Ward Road',
+                    desc:
+                      countryCode === 'KE'
+                        ? 'County neighborhood / ward road'
+                        : countryCode === 'UG'
+                        ? 'City authority (KCCA) or town council way'
+                        : 'LGA residential street & market canal',
+                  },
+                ].map((item) => (
+                  <label
+                    key={item.id}
+                    className={`border-2 p-3.5 cursor-pointer flex flex-col justify-between transition-all rounded-xl ${
+                      customClass === item.id
+                        ? 'bg-white border-[#3A543E] text-[#1E2522] ring-1 ring-[#E09F3E]'
+                        : 'bg-[#F4EFE6] border-[#DDD4C4] text-[#4A554E] hover:bg-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <input
+                        type="radio"
+                        name="road_class"
+                        value={item.id}
+                        checked={customClass === item.id}
+                        onChange={() => setCustomClass(item.id as RoadClass)}
+                        className="accent-[#3A543E]"
+                      />
+                      <span className="font-bold text-base text-[#1E2522]">{item.title}</span>
+                    </div>
+                    <span className="text-[11px] text-[#556259] mt-2 pl-6 leading-tight">
+                      {item.desc}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Approximate Length & Budget with Benchmark Estimator */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 bg-white p-4 border border-[#DDD4C4] rounded-xl">
+              <div>
+                <label className="block font-bold text-[#1E2522] uppercase tracking-wider mb-1.5">
+                  Corridor Length (Kilometers)
+                </label>
+                <div className="flex items-center">
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="0.1"
+                    id="custom-road-length"
+                    value={customLength}
+                    onChange={(e) => setCustomLength(e.target.value)}
+                    className="w-full p-2.5 bg-[#FAF7F2] border border-[#DDD4C4] text-[#1E2522] focus:border-[#3A543E] focus:outline-none font-bold rounded-l-xl"
+                  />
+                  <span className="bg-[#EAE3D5] px-4 py-2.5 border border-l-0 border-[#DDD4C4] text-[#3A543E] font-bold rounded-r-xl">
+                    km
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block font-bold text-[#1E2522] uppercase tracking-wider">
+                    Budget ({country.currency})
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => handleApplyPresetEstimate(customClass)}
+                    className="text-[10px] text-[#BF532C] font-bold underline flex items-center gap-1 hover:text-[#A64522]"
+                  >
+                    <Sparkles className="w-3 h-3" /> Auto-Estimate Band
+                  </button>
+                </div>
+                <input
+                  type="number"
+                  step="1000000"
+                  id="custom-road-budget"
+                  value={customBudget}
+                  onChange={(e) => setCustomBudget(e.target.value)}
+                  className="w-full p-2.5 bg-[#FAF7F2] border border-[#DDD4C4] text-[#1E2522] focus:border-[#3A543E] focus:outline-none font-bold rounded-xl"
+                />
+                <span className="text-[11px] text-[#66726A] mt-1 block">
+                  ≈ {formatCurrency(parseFloat(customBudget) || 0, country.currency)}
+                </span>
+              </div>
+            </div>
+
+            {/* Resident Observations */}
+            <div>
+              <label className="block font-bold text-[#1E2522] uppercase tracking-wider mb-1.5">
+                Resident Observations / Reported Condition (Optional)
+              </label>
+              <input
+                type="text"
+                id="custom-road-notes"
+                placeholder="e.g. Graded last year, abandoned after rain washed out culvert; no signpost installed."
+                value={customStatusNotes}
+                onChange={(e) => setCustomStatusNotes(e.target.value)}
+                className="w-full p-3 border border-[#DDD4C4] bg-white text-[#1E2522] focus:border-[#3A543E] focus:outline-none rounded-xl"
+              />
+            </div>
+          </div>
+
+          {/* Classification Outcome Preview */}
+          <div className="mt-6 pt-4 border-t border-[#EAE3D5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="text-xs font-mono text-[#4A554E]">
+              <span>Responsible Agency: </span>
+              <strong className="text-[#3A543E] font-bold">
+                {country.authorities[customClass].name} ({country.authorities[customClass].code})
+              </strong>
+            </div>
+
+            <button
+              type="submit"
+              id="btn-classify-road"
+              className="px-6 py-3 bg-[#3A543E] text-white font-mono text-xs uppercase font-bold tracking-wider hover:bg-[#2B402E] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm rounded-xl"
+            >
+              <FileSpreadsheet className="w-4 h-4 text-[#E09F3E]" />
+              Classify &amp; Open Case Docket
+            </button>
+          </div>
+        </form>
+      )}
     </section>
   );
 };
